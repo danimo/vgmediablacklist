@@ -7,7 +7,7 @@
 # This script is provided under the CC0 license.
 
 url='https://www.vg-media.de/de/digitale-verlegerische-angebote/berechtigte-presseverleger.html'
-xpath='//div[@class="liSendeunternehmenNEW"]/ol/li/a/@href'
+xpath='//div[@class="liSendeunternehmenNEW"]/ol/li/a/@title'
 
 blacklisttxt='blacklist.txt'
 blacklistjson='blacklist.json'
@@ -20,7 +20,7 @@ if [ -z "$xmllint" ]; then echo Please install xmllint!; exit; fi
 
 $curl -s $url \
      | $xmllint -html  --xpath "$xpath" - 2>/dev/null \
-     | sed -E 's# href="https{0,1}://([^"]*)"#\1\n#g' \
+     | sed -E 's# title="([^"]*)"#\1\n#g' \
      > "$blacklisttxt"
 
 echo "$blacklisttxt" generated
